@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menuagregar"
+        android:title="Agregar"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_baseline_save_24"
+
+        >
+    </item>
+
+    <item
+        android:id="@+id/menubuscar"
+        android:title="Buacar"
+        >
+
+    </item>
+
+    <item
+        android:id="@+id/menuactualizar"
+        android:title="Actualizar"
+        >
+
+    </item>
+
+    <item
+        android:id="@+id/menulistar"
+        android:title="Listar"
+        >
+
+    </item>
+    <item
+        android:id="@+id/menueliminar"
+        android:title="Eliminar"
+        >
+
+    </item>
+
+</menu>
