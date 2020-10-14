@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Usiario Invalido",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Usuario Invalido",Toast.LENGTH_SHORT).show();
                 }
 
             }

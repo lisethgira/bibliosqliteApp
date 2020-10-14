@@ -90,7 +90,7 @@ public class actusuario extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-               String mrol = "0";
+                String mrol = "0";
 
                 if(adminu.isChecked())
                 {
@@ -198,12 +198,13 @@ public class actusuario extends AppCompatActivity {
 
     // antes de cerrar la llave de la actividad de invoca el metodo del sobrecargado del menu
 
-   // el metodo se crea dando click derecho generate, selecciona overrrite methods y selecciona el oncreateoptionmenu
+    // el metodo se crea dando click derecho generate, selecciona overrrite methods y selecciona el oncreateoptionmenu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater infcrud = getMenuInflater(); // esto crea una variable apra inflar el menu
         infcrud.inflate(R.menu.menu_crud, menu);  // esto trae el archivo xml menu_crud desde la carpeta menu
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -220,11 +221,11 @@ public class actusuario extends AppCompatActivity {
 
             case R.id.menuagregar: // se refencia el id del xml agregar
                 metidoagregarusuario(); // esto trase el metodo agregar usuario -- SIEMPRE QUE SE CREE UN MENU DEBE TENER UN METODO APRA INSTANCIAR
-            return true;
+                return true;
 
             case R.id.menubuscar:
                 buscarusuario(emailu.getText().toString().trim());  // se trae en el metodo buscar el emmailu ya qye esta en una variable global
-            return true;
+                return true;
 
             case R.id.menuactualizar:
                 String mrol = "0";
@@ -241,6 +242,7 @@ public class actusuario extends AppCompatActivity {
     }
 
     private void metidoagregarusuario() {
+
         if (!emailu.getText().toString().isEmpty() && !nombreu.getText().toString().isEmpty() && !passu.getText().toString().isEmpty() && adminu.isChecked() || usuu.isChecked())
         {
             //instanciar un objeto de la clase base de datos para que guarde datos en ella -------- linea 17 ---------
@@ -255,10 +257,13 @@ public class actusuario extends AppCompatActivity {
             Cursor cusuari = bd.rawQuery(sql, null);
 
             // verifica si la tabla cursor tiene al menos 1 registro
-            if (cusuari.moveToFirst()) {
+            if (cusuari.moveToFirst())
+            {
                 // el email ya se encuentra registrado
                 Toast.makeText(getApplicationContext(), "¡Error!. Email asignado a otro usuario", Toast.LENGTH_SHORT).show();
-            } else {
+            }
+            else
+            {
 
                 // instanciar objeto de la BD para guardar el usuario si no existe en modo escritura
                 SQLiteDatabase bd1 = osql.getWritableDatabase();

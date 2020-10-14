@@ -11,39 +11,40 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class listados extends AppCompatActivity {
+public class listadomaterial extends AppCompatActivity {
 
-    ListView lisusuarios;
-    ArrayList <String> arrayusuarios;
-
+    ListView lismaterial;
+    ArrayList<String> arraymaterial;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listados);
+        setContentView(R.layout.activity_listadomaterial);
 
-        lisusuarios = findViewById(R.id.lvusuarios);
 
-        cargarusuario(); // se crea metodo cargar usuarios
+
+        lismaterial = findViewById(R.id.lvmaterial);
+
+        metodolistarmaterial(); // se crea metodo cargar usuarios
 
 
     }
 
-    private void cargarusuario() {  // se crea metodo cargar usuarios  para que al abrir el listado aparezca mensaje, no es necesario ponerlo
+    private void metodolistarmaterial() {  // se crea metodo cargar usuarios  para que al abrir el listado aparezca mensaje, no es necesario ponerlo
 
         Toast.makeText(getApplicationContext(), "se cargaran los usuarios", Toast.LENGTH_SHORT).show();
 
-        arrayusuarios = listadousuarios(); // se crea metodo listadousuarios para poder crear el array que almacene los datos
+        arraymaterial = listadomaterial2(); // se crea metodo listadousuarios para poder crear el array que almacene los datos
 
         // esto pasa toda la info del arrayusuarios al adaptador adapusuarios
-        ArrayAdapter <String> adapusuarios = new ArrayAdapter <String> (this, android.R.layout.simple_expandable_list_item_1, arrayusuarios);
+        ArrayAdapter<String> adapmaterial= new ArrayAdapter <String> (this, android.R.layout.simple_expandable_list_item_1, arraymaterial);
 
-        lisusuarios.setAdapter(adapusuarios); // esto pasa el arrary adapter adapusuarios y lo pasa al ListView listausuarios
+        lismaterial.setAdapter(adapmaterial); // esto pasa el arrary adapter adapusuarios y lo pasa al ListView listausuarios
 
     }
 
-    private ArrayList <String> listadousuarios() {
+    private ArrayList <String> listadomaterial2() {
 
         ArrayList <String> datos = new ArrayList<String>();  // creamos el array con la variable datos
 
@@ -51,7 +52,7 @@ public class listados extends AppCompatActivity {
 
         SQLiteDatabase bd = osql.getReadableDatabase();
 
-        String sql = "select rol, nombre, email from usuario";  // aca le decimos que nos traiga todos los elementos de la tabla usuario, por eso el *
+        String sql = "select idmat, nombre, genero from material";  // aca le decimos que nos traiga todos los elementos de la tabla usuario, por eso el *
 
         Cursor curlistado = bd.rawQuery(sql,null);
 
@@ -60,15 +61,15 @@ public class listados extends AppCompatActivity {
             do { // do while, es el ciclo mientras, con la exepcion de que entra al menos 1 vez al ciclo
 
 
-                String tipou = "Invitado";  // se inicia una variable como invitado
+                String generomat = "Lenguaje";  // se inicia una variable como invitado
 
                 if (curlistado.getString(0 ).equals("1")) //se compara esta variable, si es 1 es igual a administrador, sino sigue como invitado
                 {
-                    tipou = "Adnimistrador";
+                    generomat = "Base de datos";
                 }
 
                 // el numero que va en () es la posicion del array que deben traer, si quiero que me traiga varios datos debo hacer varias lienas
-                String registro = tipou + "      " + curlistado.getString(1) + "    " + curlistado.getString(2);
+                String registro = "              "+ curlistado.getString(0) + "              " + curlistado.getString(1)  + "               " + generomat;
 
                 datos.add(registro); // esta liena es la que añade lo que traiga de la BD en el arreglo
             }
