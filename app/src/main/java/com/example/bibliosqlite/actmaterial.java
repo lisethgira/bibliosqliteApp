@@ -1,5 +1,6 @@
 package com.example.bibliosqlite;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +10,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -116,15 +120,19 @@ public class actmaterial extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(getApplicationContext(), listadomaterial.class));
-
+                metodolistar();
             }
         });
 
 
     }
 
+    private void metodolistar() {
+        startActivity(new Intent(getApplicationContext(), listadomaterial.class));
+    }
+
     private void metodoeliminar() {
+
         AlertDialog.Builder alertacuadro = new AlertDialog.Builder(actmaterial.this);
         alertacuadro.setMessage("Eliminara el libro");
         alertacuadro.setPositiveButton("Sí",new DialogInterface.OnClickListener() {
@@ -134,7 +142,7 @@ public class actmaterial extends AppCompatActivity {
 
                 SQLiteDatabase bd1 = osql.getWritableDatabase();
 
-                bd1.execSQL("DELETE FROM material WHERE idmaterial = '"+idmat.getText().toString()+"'");
+                bd1.execSQL("DELETE FROM material WHERE idmat = '"+idmat.getText().toString()+"'");
 
                 idmat.setText("");
                 nombremat.setText("");
@@ -299,5 +307,39 @@ public class actmaterial extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater infcrud = getMenuInflater();
+        infcrud.inflate(R.menu.menu_crud, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId())
+        {
+
+            case R.id.menuagregar:
+                metodoagregar();
+                return true;
+            case R.id.menubuscar:
+                metodobuscar();
+                return true;
+            case R.id.menuactualizar:
+                metodoactualizar();
+                return true;
+            case R.id.menulistar:
+                metodolistar();
+                return true;
+            case R.id.menueliminar:
+                metodoeliminar();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
