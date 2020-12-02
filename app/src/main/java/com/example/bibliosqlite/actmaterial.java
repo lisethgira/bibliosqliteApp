@@ -50,10 +50,22 @@ public class actmaterial extends AppCompatActivity {
         //resibir los datos enciados del mainactivity que se mandaron con el Intent
 
         String mrol = getIntent().getStringExtra("role"); // esto resibe lo que se envie en el intent en con variable role
+        if (mrol.equals("1"))
+        {
+            AlertDialog.Builder alertacuadro = new AlertDialog.Builder(actmaterial.this);
+            alertacuadro.setMessage("usted dispone de todas las opciones de un administrador");
+            Toast.makeText(getApplicationContext(), "usted está ingresando como administrador", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            AlertDialog.Builder alertacuadro = new AlertDialog.Builder(actmaterial.this);
+            alertacuadro.setMessage("necesita permisos de administrador para habilitar los botones: agregar,actualizar y eliminar.");
+            Toast.makeText(getApplicationContext(), "usted esta ingresando como invitado, por lo tanto no dispone de opciones como agregar, actualizar y eliminnar material", Toast.LENGTH_SHORT).show();
+        }
+
         String memail = getIntent().getStringExtra("emaile");
 
         emailu.setText(memail);
-
 
         // verifica el rol teniendo en cuenta que en la actividad usuario de inicializo en 0
 
@@ -67,17 +79,24 @@ public class actmaterial extends AppCompatActivity {
             listarm.setEnabled(true);
             eliminarm.setEnabled(true);
 
+            Toast.makeText(getApplicationContext(), "tienes habilitadas todas las opciones de administrador",
+                    Toast.LENGTH_SHORT).show();
+
         }
         else
         {
             // este desactiva todos los botones ya que si viene en 0 es usuario invitado
-
             agregarm.setEnabled(false);
             buscarm.setEnabled(true);
             actualziarm.setEnabled(false);
             listarm.setEnabled(true);
             eliminarm.setEnabled(false);
+
+            Toast.makeText(getApplicationContext(),
+                    "necesita un permiso de administrador: para activar las funciones: agregar, eliminar y actualizar",
+                    Toast.LENGTH_SHORT).show();
         }
+
 
         // boton agregar
 
@@ -86,6 +105,7 @@ public class actmaterial extends AppCompatActivity {
             public void onClick(View v) {
 
                 metodoagregar();
+
 
             }
         });

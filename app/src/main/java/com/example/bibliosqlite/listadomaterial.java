@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class listadomaterial extends AppCompatActivity {
 
     ListView lismaterial;
+    basedatossqlite osqlite = new basedatossqlite(this, "BDMATERIAL",null,1 );
     ArrayList<String> arraymaterial;
 
 
@@ -22,60 +23,56 @@ public class listadomaterial extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listadomaterial);
 
-
-
         lismaterial = findViewById(R.id.lvmaterial);
 
-        metodolistarmaterial(); // se crea metodo cargar usuarios
+        metodolistarmaterial();
 
 
     }
 
-    private void metodolistarmaterial() {  // se crea metodo cargar usuarios  para que al abrir el listado aparezca mensaje, no es necesario ponerlo
+    private void metodolistarmaterial() {
 
-        Toast.makeText(getApplicationContext(), "se cargaran los usuarios", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "se cargaran los materiales", Toast.LENGTH_SHORT).show();
 
-        arraymaterial = listadomaterial2(); // se crea metodo listadousuarios para poder crear el array que almacene los datos
+        arraymaterial = listadomaterial2();
 
-        // esto pasa toda la info del arrayusuarios al adaptador adapusuarios
         ArrayAdapter<String> adapmaterial= new ArrayAdapter <String> (this, android.R.layout.simple_expandable_list_item_1, arraymaterial);
 
-        lismaterial.setAdapter(adapmaterial); // esto pasa el arrary adapter adapusuarios y lo pasa al ListView listausuarios
+        lismaterial.setAdapter(adapmaterial);
 
     }
 
     private ArrayList <String> listadomaterial2() {
 
-        ArrayList <String> datos = new ArrayList<String>();  // creamos el array con la variable datos
 
-        basedatossqlite osql = new basedatossqlite(this,"bdbiblioteca",null,1);
+        ArrayList <String> datos = new ArrayList<String>();
 
-        SQLiteDatabase bd = osql.getReadableDatabase();
+        SQLiteDatabase bd = osqlite.getReadableDatabase();
 
-        String sql = "select idmat, nombre, genero from material";  // aca le decimos que nos traiga todos los elementos de la tabla usuario, por eso el *
+        String sql = "select idmat, nombre, genero, email from material";
 
-        Cursor curlistado = bd.rawQuery(sql,null);
+        Cursor cursorMaterial = bd.rawQuery(sql,null);
 
-        if (curlistado.moveToFirst())
+        if (cursorMaterial.moveToFirst())
         {
-            do { // do while, es el ciclo mientras, con la exepcion de que entra al menos 1 vez al ciclo
+            do {
 
+                String generomat = "lenguajes";
 
-                String generomat = "Lenguaje";  // se inicia una variable como invitado
-
-                if (curlistado.getString(0 ).equals("1")) //se compara esta variable, si es 1 es igual a administrador, sino sigue como invitado
+                if (cursorMaterial.getString(2 ).equals("1"))
                 {
-                    generomat = "Base de datos";
+                    generomat = "bases de datos";
                 }
 
-                // el numero que va en () es la posicion del array que deben traer, si quiero que me traiga varios datos debo hacer varias lienas
-                String registro = "              "+ curlistado.getString(0) + "              " + curlistado.getString(1)  + "               " + generomat;
+                String registro = " "+cursorMaterial.getString(0) + "  " + cursorMaterial.getString(1)  + "  " + generomat;
 
-                datos.add(registro); // esta liena es la que añade lo que traiga de la BD en el arreglo
+                datos.add(registro);
             }
-            while (curlistado.moveToNext()); // esto lo que dice es que mientras analiza los registros del do se mueva al siguiente registro hasta el fin del archivo
+            while (cursorMaterial.moveToNext());
+        }else {
+            Toast.makeText(getApplicationContext(),"No se encontraron elementos",Toast.LENGTH_SHORT).show();
         }
-        bd.close(); // al moverse todos los registros con el while se cierra la base de datos
-        return datos; // al recorrer la bd y almacenarlos en el arrar, cierra la BD y devuelve toda la informacion en la variable datos al arrayusuarios en la variable lostadousuarios
+        bd.close();
+        return datos;
     }
 }
